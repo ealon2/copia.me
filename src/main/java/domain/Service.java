@@ -8,12 +8,16 @@ public abstract class Service {
   @Getter protected Plan plan;
   @Getter protected Document original, documentToReview;
 
-  public abstract void automaticValidation(Document original, Document documentToReview);
+  public abstract void automaticValidation();
 
-  // Al tratarse de un servicio async, retorna un VOID
+  /**
+   * Llamamos simplemente ejecutar, dado que la validación manual
+   * nos lleva a pensar necesariamente en asincronismo
+   * Y dado que el proceso ahora será asincrónico, el método deberá ser void.
+   */
   public void execute(){
-    plan.manualExecution(original, documentToReview);
-    this.automaticValidation(original, documentToReview);
+    this.automaticValidation();
+    plan.manualExecution(this);
   }
 
   public double getCost(){
